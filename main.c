@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 		token = strtok(buffer, deliminators);
 		strcpy(op, token);
 		f = get_func(&stack, line_number, token);
-		if(strcmp(op, "push") == 0)
+		if (strcmp(op, "push") == 0)
 		{
 			token = strtok(NULL, deliminators);
 			if (token == NULL)
