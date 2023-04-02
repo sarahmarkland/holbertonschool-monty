@@ -17,3 +17,66 @@ void push(stack_t **stack, unsigned int line_number)
 		free_stack(stack);
 	}
 }
+/**
+ * pop - removes the first element of the stack
+ * @stack: linked list stack to pop
+ * @line_number: current line number of bytecode file
+ */
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+
+	temp = *stack;
+	if (!(*stack))
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		close_error();
+		exit(EXIT_FAILURE);
+	}
+
+	*stack = temp->next;
+	if (*stack)
+		(*stack)->prev = NULL;
+	free(temp);
+}
+
+/**
+ * swap - swaps the two top elements of a stack
+ * @stack: linked list stack to swap
+ * @line_number: current line number of bytecode file
+ */
+void swap(stack_t **stack, unsigned int line_number)
+{
+	int temp = (*stack)->n;
+
+	if (!(*stack) || !(*stack)->next)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
+		close_error();
+	}
+
+	(*stack)->n = (*stack)->next->n;
+	(*stack)->next->n = temp;
+}
+
+/**
+ * add - adds the first two elements of a stack, replaces both with sum
+ * @stack: linked list stack to add
+ * @line_number: current line number of bytecode file
+ */
+void add(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp = *stack;
+
+	if (!temp || !temp->next)
+	{
+		fprintf(stderr, "L%d: can't add, stack too short\n", line_number);
+		free_stack(stack);
+		close_error();
+	}
+
+	temp->next->n += temp->n;
+	*stack = temp->next;
+	(*stack)->prev = NULL;
+	free(temp);
+}
