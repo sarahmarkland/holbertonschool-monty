@@ -63,9 +63,9 @@ void (*get_func(stack_t **stack, int l, char *code))(stack_t **, unsigned int)
 		{"push", push},
 		{"pall", pall},
 		{"pint", pint},
-/*		{"pop", pop},*/
-/*		{"swap", swap},*/
-/*		{"add", add},*/
+		{"pop", pop},
+		{"swap", swap},
+		{"add", add},
 		{"nop", nop}
 	};
 
