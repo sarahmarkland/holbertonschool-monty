@@ -37,8 +37,6 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-int main(int ac, char **av);
-
 void pall(stack_t **stack, unsigned int line_number);
 void pint(stack_t **stack, unsigned int line_number);
 void nop(stack_t **stack, unsigned int line_number);
@@ -52,6 +50,7 @@ void (*get_func(stack_t **stack, int l, char *code))(stack_t **, unsigned int);
 void set_n(stack_t **stack, unsigned int line_num, char *num);
 void free_stack(stack_t **stack);
 void close_error(void);
+void pushOp(stack_t **stack, unsigned int line_number, char *pushNum);
 
 /*================   GLOBAL VARIABLE   ==================*/
 extern FILE *fd;

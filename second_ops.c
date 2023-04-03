@@ -9,13 +9,23 @@ void push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new;
 
-	(void)line_number;
 	new = malloc(sizeof(stack_t));
+
 	if (new == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		free_stack(stack);
+		close_error();
 	}
+	(void)line_number;
+
+	if (*stack)
+		(*stack)->prev = new;
+
+	new->prev = NULL;
+	new->next = *stack;
+	new->n = 0;
+	*stack = new;
 }
 /**
  * pop - removes the first element of the stack
@@ -30,7 +40,8 @@ void pop(stack_t **stack, unsigned int line_number)
 	if (!(*stack))
 	{
 		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
-		close_error();
+		fclose(fd);
+		free_stack(stack);
 		exit(EXIT_FAILURE);
 	}
 
@@ -53,6 +64,7 @@ void swap(stack_t **stack, unsigned int line_number)
 	{
 		fprintf(stderr, "L%d: can't swap, stack too short\n", line_number);
 		close_error();
+		exit(EXIT_FAILURE);
 	}
 
 	(*stack)->n = (*stack)->next->n;
